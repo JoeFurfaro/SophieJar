@@ -16,6 +16,14 @@ def create_miniegg(request):
         return JsonResponse({}, status=200)
     return JsonResponse({}, status=400)
 
+@api_view(['POST'])
+def pick_miniegg(request):
+    print(request.data)
+    if "title" in request.data:
+        MiniEgg.objects.filter(title=request.data["title"])[0].delete()
+        return JsonResponse({}, status=200)
+    return JsonResponse({}, status=400)
+
 @api_view(['GET'])
 def grab_miniegg(request):
     if len(MiniEgg.objects.all()) == 0:
@@ -24,7 +32,6 @@ def grab_miniegg(request):
     index = randrange(0, len(objects))
     obj = objects[index]
     title = obj.title
-    obj.delete()
     return JsonResponse({"title": title}, status=200)
 
 @api_view(['GET'])

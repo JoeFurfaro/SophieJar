@@ -23,4 +23,5 @@ urlpatterns = [
     path('api/grab', grab_miniegg),
     path('api/count', count_minieggs),
     path('api/view', view_minieggs),
+    path('api/pick', pick_miniegg),
 ]
