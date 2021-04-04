@@ -13,6 +13,7 @@ def create_miniegg(request):
     print(request.data)
     if "title" in request.data:
         MiniEgg.objects.create(title=request.data["title"])
+        return JsonResponse({}, status=200)
     return JsonResponse({}, status=400)
 
 @api_view(['GET'])
