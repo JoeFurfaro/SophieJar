@@ -25,7 +25,7 @@ SECRET_KEY = '_b6fk2&997b%4w1*#n!@*i&mf!nw+rrxobgg4y4hn46@qyn690'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["joefurfaro.ca", "joefurfaro.ca:3000"]
 
 
 # Application definition
@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'sophiejar.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': str(BASE_DIR / 'db.sqlite3'),
     }
 }
 
