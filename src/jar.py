@@ -2,17 +2,17 @@ import requests
 
 url = "http://joefurfaro.ca:3000/api"
 
-inp_str = "Choose mode (create (C), grab (G), view(V)) or E to exit: "
+inp_str = "Choose mode (create (c), grab (g), view (v), finished (f)) or e to exit: "
 mode = input(inp_str)
 
-while mode != "E":
-	if mode == "C":
+while mode != "e":
+	if mode == "c":
 		title = input("Enter MiniEgg Title: ")
 		response = requests.post(url+"/create", data={"title": title})
 		if response.status_code == 200:
 			print("MiniEgg created successfully!")
 
-	if mode == "G":
+	if mode == "g":
 
 		take = "n"
 		cur = None
@@ -34,11 +34,18 @@ while mode != "E":
 			else:
 				print("Could take grab MiniEgg :(")
 
-	if mode == "V":
+	if mode == "v":
 		response = requests.get(url+"/count")
-		print("Showing " + str(response.json()["count"]) + " MiniEggs:")
+		print("Showing " + str(response.json()["jar"]) + " MiniEggs:")
 		response = requests.get(url+"/view")
 		for thing in response.json()["minieggs"]:
+			print("  - " + thing)
+	
+	if mode == "f":
+		response = requests.get(url+"/count")
+		print("Showing " + str(response.json()["finished"]) + " Past-Picked MiniEggs:")
+		response = requests.get(url+"/view")
+		for thing in response.json()["finished"]:
 			print("  - " + thing)
 
 	print()

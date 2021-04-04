@@ -3,7 +3,7 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 
 from django.http import JsonResponse
-from api.models import MiniEgg
+from api.models import MiniEgg, FinishedEgg
 
 from random import randrange
 
@@ -21,6 +21,7 @@ def pick_miniegg(request):
     print(request.data)
     if "title" in request.data:
         MiniEgg.objects.filter(title=request.data["title"])[0].delete()
+        FinishedEgg.objects.create(title=request.data["title"])
         return JsonResponse({}, status=200)
     return JsonResponse({}, status=400)
 
@@ -36,8 +37,8 @@ def grab_miniegg(request):
 
 @api_view(['GET'])
 def count_minieggs(request):
-    return JsonResponse({"count": len(MiniEgg.objects.all())}, status=200)
+    return JsonResponse({"jar": len(MiniEgg.objects.all()), "finished": len(FinishedEgg.objects.all())}, status=200)
 
 @api_view(['GET'])
 def view_minieggs(request):
-    return JsonResponse({"minieggs": [x.title for x in MiniEgg.objects.all()]}, status=200)
+    return JsonResponse({"minieggs": [x.title for x in MiniEgg.objects.all()], "finished": [x.title for x in FinishedEgg.objects.all()]}, status=200)
